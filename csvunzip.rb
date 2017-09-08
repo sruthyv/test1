@@ -1,23 +1,15 @@
 require 'csv'
 require 'rubygems'
 require 'zip'
-
 require 'net/http'
 
-Net::HTTP.start("s3.amazonaws.com") { |http|
-
-  content = http.get("http://s3.amazonaws.com/alexa-static/top-1m.csv.zip")
-
-  File.open("top", "w") { |file|
-
-    file.write(content.body)
-
-   }
-
-}
-
-
-puts"done"
+Net::HTTP.start("s3.amazonaws.com/") do |http|
+    resp = http.get("http://s3.amazonaws.com/alexa-static/top-1m.csv.zip")
+    open("top", "wb") do |file|
+        file.write(resp.body)
+    end
+end
+puts "Done."
 
 def unzip_file (file, destination)
 Zip::File.open(file) do |zip_file|
