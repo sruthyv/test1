@@ -12,3 +12,4 @@ class CsvzipTest < Minitest::Test
         assert File.exist?("/home/user/test1/top-1m.csv")
     end
 end
+
